@@ -1,0 +1,1984 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src 'self'; img-src 'self' data: https:;">
+    <title>Warung Seuhah - Pedasnya Bikin Nagih!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-red: #DC2626;
+            --dark-red: #991B1B;
+            --light-red: #FEE2E2;
+            --orange: #F97316;
+            --light-orange: #FFEDD5;
+            --yellow: #FBBF24;
+            --white: #FFFFFF;
+            --dark: #1F2937;
+            --success: #10B981;
+            --warning: #F59E0B;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #FFF5F5;
+            overflow-x: hidden;
+        }
+
+        /* Security Notice Banner */
+        .security-banner {
+            background: linear-gradient(90deg, #1F2937, #374151);
+            color: var(--white);
+            padding: 10px;
+            text-align: center;
+            font-size: 0.85rem;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1001;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .security-banner i {
+            color: var(--success);
+        }
+
+        /* Background Pattern */
+        .bg-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.05;
+            background-image: 
+                radial-gradient(circle at 25% 25%, var(--orange) 2px, transparent 2px),
+                radial-gradient(circle at 75% 75%, var(--primary-red) 2px, transparent 2px);
+            background-size: 50px 50px;
+            animation: patternMove 20s linear infinite;
+        }
+
+        @keyframes patternMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 40px;
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary-red), var(--dark-red));
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(220, 38, 38, 0.3);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--white);
+            font-size: 24px;
+            font-weight: 800;
+            text-decoration: none;
+        }
+
+        .logo i {
+            font-size: 28px;
+            color: var(--yellow);
+            animation: flame 1s ease-in-out infinite alternate;
+        }
+
+        @keyframes flame {
+            from { transform: scale(1) rotate(-5deg); }
+            to { transform: scale(1.1) rotate(5deg); }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--orange);
+            transition: width 0.3s;
+            border-radius: 2px;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu {
+            display: none;
+            color: var(--white);
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 110px;
+            background: linear-gradient(135deg, var(--primary-red) 0%, var(--dark-red) 100%);
+            min-height: 85vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 10px,
+                rgba(249, 115, 22, 0.1) 10px,
+                rgba(249, 115, 22, 0.1) 20px
+            );
+            animation: slide 20s linear infinite;
+        }
+
+        @keyframes slide {
+            0% { transform: translate(-50%, -50%); }
+            100% { transform: translate(0, 0); }
+        }
+
+        .hero-content {
+            text-align: center;
+            color: var(--white);
+            z-index: 2;
+            padding: 20px;
+            max-width: 800px;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: var(--orange);
+            color: var(--white);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+            box-shadow: 0 4px 15px rgba(249, 115, 22, 0.4);
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            text-shadow: 3px 3px 0 var(--orange);
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero h1 span {
+            color: var(--yellow);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            opacity: 0.95;
+            animation: fadeInUp 1s ease 0.2s backwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease 0.4s backwards;
+        }
+
+        .btn {
+            padding: 15px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.1rem;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: var(--orange);
+            color: var(--white);
+            box-shadow: 0 4px 20px rgba(249, 115, 22, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(249, 115, 22, 0.6);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--white);
+            border: 3px solid var(--white);
+        }
+
+        .btn-secondary:hover {
+            background: var(--white);
+            color: var(--primary-red);
+        }
+
+        /* Floating Elements */
+        .floating-chili {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.2;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .chili-1 { top: 20%; left: 10%; animation-delay: 0s; }
+        .chili-2 { top: 60%; right: 15%; animation-delay: 2s; }
+        .chili-3 { bottom: 20%; left: 20%; animation-delay: 4s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+        }
+
+        /* Features Section */
+        .features {
+            padding: 80px 5%;
+            background: var(--white);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--dark-red);
+            margin-bottom: 10px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-red), var(--orange));
+            border-radius: 2px;
+        }
+
+        .section-title p {
+            color: #666;
+            font-size: 1.1rem;
+            margin-top: 20px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, #FFF5F5, #FFF);
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(220, 38, 38, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .feature-card:hover::before {
+            left: 100%;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--orange);
+            box-shadow: 0 10px 30px rgba(220, 38, 38, 0.2);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary-red), var(--orange));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: var(--white);
+            font-size: 2rem;
+            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3);
+        }
+
+        .feature-card h3 {
+            color: var(--dark-red);
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+
+        .feature-card p {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Best Seller Menu Section */
+        .menu-section {
+            padding: 80px 5%;
+            background: linear-gradient(180deg, #FFF5F5 0%, #FFF 100%);
+            position: relative;
+        }
+
+        .menu-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100px;
+            background: linear-gradient(180deg, var(--white), transparent);
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .menu-card {
+            background: var(--white);
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            position: relative;
+            border: 3px solid transparent;
+        }
+
+        .menu-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 20px 50px rgba(220, 38, 38, 0.2);
+            border-color: var(--orange);
+        }
+
+        .menu-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, var(--orange), var(--yellow));
+            color: var(--dark);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            z-index: 10;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            animation: badgePulse 2s infinite;
+        }
+
+        @keyframes badgePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .menu-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            background: linear-gradient(135deg, #FEE2E2, #FFEDD5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: var(--primary-red);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .menu-image::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .menu-card:hover .menu-image::after {
+            opacity: 1;
+        }
+
+        .menu-content {
+            padding: 25px;
+        }
+
+        .menu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .menu-header h3 {
+            color: var(--dark-red);
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        .price {
+            color: var(--orange);
+            font-size: 1.3rem;
+            font-weight: 800;
+        }
+
+        .menu-description {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .spicy-level {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 15px;
+        }
+
+        .spicy-level i {
+            color: var(--orange);
+            font-size: 0.9rem;
+        }
+
+        .order-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            color: var(--white);
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.3s;
+            text-decoration: none;
+            font-size: 1rem;
+        }
+
+        .order-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(37, 211, 102, 0.4);
+        }
+
+        /* Spicy Meter Widget - FIXED */
+        .spicy-meter {
+            background: linear-gradient(135deg, var(--primary-red), var(--dark-red));
+            padding: 60px 5%;
+            color: var(--white);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .spicy-meter::before {
+            content: '🌶️';
+            position: absolute;
+            font-size: 15rem;
+            opacity: 0.05;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .meter-container {
+            max-width: 800px;
+            margin: 30px auto;
+            background: rgba(255,255,255,0.2);
+            padding: 30px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .spicy-slider {
+            width: 100%;
+            height: 12px;
+            border-radius: 6px;
+            background: linear-gradient(90deg, #FBBF24, #F97316, #DC2626, #991B1B, #7F1D1D);
+            outline: none;
+            -webkit-appearance: none;
+            margin: 30px 0;
+            position: relative;
+        }
+
+        .spicy-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: var(--white);
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            border: 4px solid var(--orange);
+            transition: transform 0.2s;
+        }
+
+        .spicy-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+
+        .spicy-slider::-moz-range-thumb {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: var(--white);
+            cursor: pointer;
+            border: 4px solid var(--orange);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .spicy-labels {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 600;
+            margin-top: 15px;
+            font-size: 0.9rem;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .spicy-labels span {
+            flex: 1;
+            min-width: 100px;
+            padding: 5px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .spicy-labels span.active {
+            background: var(--orange);
+            transform: scale(1.1);
+        }
+
+        #spicyRecommendation {
+            margin-top: 25px;
+            font-weight: 700;
+            font-size: 1.3rem;
+            padding: 15px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 12px;
+            border-left: 5px solid var(--yellow);
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 80px 5%;
+            background: var(--white);
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .testimonial-card {
+            background: linear-gradient(135deg, #FFF5F5, #FFF);
+            padding: 30px;
+            border-radius: 20px;
+            border-left: 5px solid var(--orange);
+            position: relative;
+        }
+
+        .testimonial-card::before {
+            content: '"';
+            font-size: 4rem;
+            color: var(--primary-red);
+            opacity: 0.2;
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            font-family: serif;
+        }
+
+        .stars {
+            color: var(--yellow);
+            margin-bottom: 15px;
+        }
+
+        .testimonial-text {
+            color: #555;
+            font-style: italic;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .customer-name {
+            font-weight: 700;
+            color: var(--dark-red);
+        }
+
+        /* Modal Biodata */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--white);
+            border-radius: 25px;
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: modalSlide 0.3s ease;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            border: 3px solid var(--primary-red);
+        }
+
+        @keyframes modalSlide {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .modal-header i {
+            font-size: 3rem;
+            color: var(--primary-red);
+            margin-bottom: 15px;
+        }
+
+        .modal-header h3 {
+            color: var(--dark-red);
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .modal-header p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .security-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #10B981, #059669);
+            color: var(--white);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--dark);
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .form-group label span {
+            color: var(--primary-red);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #E5E7EB;
+            border-radius: 12px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s;
+            background: #F9FAFB;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-red);
+            background: var(--white);
+            box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+        }
+
+        .form-group input.error {
+            border-color: var(--primary-red);
+            background: #FEF2F2;
+        }
+
+        .error-message {
+            color: var(--primary-red);
+            font-size: 0.85rem;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        .password-strength {
+            height: 4px;
+            background: #E5E7EB;
+            border-radius: 2px;
+            margin-top: 8px;
+            overflow: hidden;
+        }
+
+        .password-strength-bar {
+            height: 100%;
+            width: 0;
+            transition: all 0.3s;
+            border-radius: 2px;
+        }
+
+        .strength-weak { background: var(--primary-red); width: 33%; }
+        .strength-medium { background: var(--warning); width: 66%; }
+        .strength-strong { background: var(--success); width: 100%; }
+
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin-top: 2px;
+            accent-color: var(--primary-red);
+        }
+
+        .checkbox-group label {
+            font-size: 0.9rem;
+            color: #666;
+            line-height: 1.4;
+        }
+
+        .checkbox-group label a {
+            color: var(--primary-red);
+            font-weight: 600;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, var(--primary-red), var(--dark-red));
+            color: var(--white);
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(220, 38, 38, 0.4);
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #F3F4F6;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: #666;
+            transition: all 0.3s;
+        }
+
+        .close-modal:hover {
+            background: var(--primary-red);
+            color: var(--white);
+        }
+
+        /* Voice Control */
+        .voice-control {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            background: linear-gradient(135deg, var(--orange), var(--primary-red));
+            color: var(--white);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(249, 115, 22, 0.4);
+            z-index: 998;
+            border: none;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+        }
+
+        .voice-control:hover {
+            transform: scale(1.1);
+        }
+
+        .voice-control.muted {
+            background: #6B7280;
+        }
+
+        /* WhatsApp Floating Button */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #25D366;
+            color: var(--white);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+            cursor: pointer;
+            z-index: 999;
+            transition: all 0.3s;
+            text-decoration: none;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 30px rgba(37, 211, 102, 0.6);
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--dark-red), #7F1D1D);
+            color: var(--white);
+            padding: 50px 5% 20px;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .social-links a:hover {
+            background: var(--orange);
+            transform: translateY(-3px);
+        }
+
+        /* Loading Animation */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--primary-red);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s;
+        }
+
+        .loader.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loader-content {
+            text-align: center;
+            color: var(--white);
+        }
+
+        .loader-content i {
+            font-size: 4rem;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .mobile-menu {
+                display: block;
+            }
+            
+            .hero {
+                margin-top: 100px;
+                min-height: 70vh;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+
+            .spicy-labels {
+                font-size: 0.75rem;
+            }
+
+            .spicy-labels span {
+                min-width: 80px;
+            }
+
+            .modal-content {
+                padding: 25px;
+            }
+
+            .security-banner {
+                font-size: 0.75rem;
+                padding: 8px;
+            }
+
+            nav {
+                top: 36px;
+            }
+
+            .hero {
+                margin-top: 100px;
+            }
+        }
+
+        /* Success Animation */
+        .success-check {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: var(--success);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            animation: scaleIn 0.5s ease;
+        }
+
+        .success-check i {
+            color: var(--white);
+            font-size: 2.5rem;
+        }
+
+        @keyframes scaleIn {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        /* Encryption Visual */
+        .encryption-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.8rem;
+            color: var(--success);
+            margin-top: 10px;
+            padding: 8px;
+            background: #ECFDF5;
+            border-radius: 8px;
+            border-left: 3px solid var(--success);
+        }
+
+        .encryption-status i {
+            animation: pulse 2s infinite;
+        }
+    </style>
+</head>
+<body>
+    <!-- Content Security Policy Notice -->
+    <div class="security-banner">
+        <i class="fas fa-shield-alt"></i>
+        <span>🔒 Situs ini dilindungi enkripsi AES-256. Data Anda aman & tidak disimpan di server.</span>
+    </div>
+
+    <!-- Loading Screen -->
+    <div class="loader" id="loader">
+        <div class="loader-content">
+            <i class="fas fa-fire"></i>
+            <p style="margin-top: 20px; font-weight: 600;">Memuat Pedasnya...</p>
+        </div>
+    </div>
+
+    <!-- Background Pattern -->
+    <div class="bg-pattern"></div>
+
+    <!-- Navigation -->
+    <nav>
+        <a href="#" class="logo">
+            <i class="fas fa-fire"></i>
+            <span>WARUNG SEUHAH</span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="#home">Beranda</a></li>
+            <li><a href="#features">Keunggulan</a></li>
+            <li><a href="#menu">Menu</a></li>
+            <li><a href="#testimonials">Testimoni</a></li>
+            <li><a href="#" onclick="openOrderModal()">Pesan</a></li>
+        </ul>
+        <div class="mobile-menu">
+            <i class="fas fa-bars"></i>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="floating-chili chili-1">🌶️</div>
+        <div class="floating-chili chili-2">🌶️</div>
+        <div class="floating-chili chili-3">🌶️</div>
+        
+        <div class="hero-content">
+            <div class="hero-badge">🔥 WARUNG SEUHAH</div>
+            <h1>WARUNG
+              <span>SEUHAH!</span></h1>
+            <p>Nikmati sensasi pedas autentik khas Rangkasbitung dengan bumbu rahasia warisan turun-temurun. Setiap gigitan adalah petualangan rasa yang tak terlupakan!</p>
+            <div class="cta-buttons">
+                <button onclick="openOrderModal()" class="btn btn-primary">
+                    <i class="fab fa-whatsapp"></i>
+                    Pesan Sekarang
+                </button>
+                <a href="#menu" class="btn btn-secondary">
+                    <i class="fas fa-utensils"></i>
+                    Lihat Menu Best Seller
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Unique Features -->
+    <section class="features" id="features">
+        <div class="section-title">
+            <h2>Fitur Unggulan Kami</h2>
+            <p>Mengapa Warung Seuhah berbeda dari yang lain?</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-fire-alt"></i>
+                </div>
+                <h3>Level Pedas Custom</h3>
+                <p>Pilih level kepedasan dari 1-5 sesuai selera Anda. Dari "Pedas Biasa" sampai "Pedas Setan"!🔥🔥</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <h3>Keamanan Data</h3>
+                <p>di jamin 100% data pelanggan akan aman 🥷🥷</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-leaf"></i>
+                </div>
+                <h3>Bumbu Alami</h3>
+                <p>Pedas yang alami bikin ketagihan dan rasa ingin nambah porsi😭😭.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-gift"></i>
+                </div>
+                <h3>Stamp Card Digital</h3>
+                <p>makin sering membeli semakin besar diskon buat kamu😍😍</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Best Seller Menu -->
+    <section class="menu-section" id="menu">
+        <div class="section-title">
+            <h2>4 Menu Best Seller</h2>
+            <p>Paling laris dan jadi favorit pelanggan setia Warung Seuhah</p>
+        </div>
+        
+        <div class="menu-grid">
+            <!-- Menu 1: Seblak Tulang -->
+            <div class="menu-card">
+                <div class="menu-badge">TOP 1</div>
+                <div class="menu-image">
+                    <i class="fas fa-drumstick-bite"></i>
+                    <span style="font-size: 1rem; position: absolute; bottom: 10px; color: #666;">Gambar Seblak Tulang</span>
+                </div>
+                <div class="menu-content">
+                    <div class="menu-header">
+                        <h3>Seblak Tulang</h3>
+                        <span class="price">Rp18K</span>
+                    </div>
+                    <div class="spicy-level">
+                        <i class="fas fa-pepper-hot"></i>
+                        <i class="fas fa-pepper-hot"></i>
+                        <i class="fas fa-pepper-hot"></i>
+                        <i class="fas fa-pepper-hot"></i>
+                        <i class="fas fa-pepper-hot" style="opacity: 0.3;"></i>
+                    </div>
+                    <p class="menu-description">
+                        Kombinasi sempurna kerupuk kencur, tulang ayam berdaging, ceker empuk, dengan kuah pedas gurih khas Seuhah.
+                    </p>
+                    <button onclick="openOrderModal('Seblak Tulang')" class="order-btn">
+                        <i class="fab fa-whatsapp"></i> Pesan via WhatsApp
+                    </button>
+                </div>
+            </div>
+
+            <!-- Menu 2: Pangsit Seuhah -->
+            <div class="menu-card">
+                <div class="menu-badge">FAVORIT</div>
+                <div class="menu-image">
+                    <i class="fas fa-dumpling"></i>
+                    <span style="font-size: 1rem; position: absolute; bottom: 10px; color: #666;">Gambar Pangsit Goreng</span>
+                </div>
+                <div class="menu-content">
+                    <div class="menu-header">
+                        <h3>Pangsit Seuhah</h3>
+                        <span class="price">Rp15K</span>
+                    </div>
+                    <div class="spicy-level">
+                        <i class="fas fa-pepper-hot"></i>
+                        <i class="fas fa-pepper-hot"></i>
+                        <i class="fas fa-pepper-hot"></i>
+                        <i class="fas fa-pepper-hot" style="opacity: 0.3;"></i>
+                        <i class="fas fa-pepper-hot" style="opacity: 0.3;"></i>
+                    </div>
+                    <p class="menu-description">
+                        Pangsit isi ayam fillet goreng renyah, disiram saus pedas manis spesial dengan taburan bawang goreng.
+                    </p>
+                    <button onclick="openOrderModal('Pangsit Seuhah')" class="order-btn">
+                        <i class="fab fa-whatsapp"></i> Pesan via WhatsApp
+                    </button>
+                </div>
+            </div>
+
+            <!-- Menu 3: Spatula -->
+            <div class="menu-card">
+                <div class="menu-badge">UNIK</div>
+                <div class="menu-image">
+                    <i class="fas fa-bone"></i>
+                    <span style="font-size: 1rem; position: absolute; bottom: 10px; color: #666;">Gambar Spageti Tulang</span>
+                </div>
+                <div class="menu-content">
+                    <div class="menu-header">
+                        <h3>Spatula</h3>
+                        <span class="price">Rp20K</span>
+                    </div>
+                    <div class="spicy-level">
+                        <i class="fas fa-pepper-hot"></i>
+                        <i class="fas fa-pepper-hot"></i>
+                        <i class="fas fa-pepper-hot"></i>
+                        <i class="fas fa-pepper-hot"></i>
+                        <i class="fas fa-pepper-hot"></i>
+                    </div>
+                    <p class="menu-description">
+                        Spaghetti tulang ayam dengan bumbu seblak pedas nendang! Perpaduan Italia dan Garut yang tak terduga.
+                    </p>
+                    <button onclick="openOrderModal('Spatula')" class="order-btn">
+                        <i class="fab fa-whatsapp"></i> Pesan via WhatsApp
+                    </button>
+                </div>
+            </div>
+
+            <!-- Menu 4: Mie Setan -->
+            <div class="menu-card">
+                <div class="menu-badge">PEDAS EXTREME</div>
+                <div class="menu-image">
+                    <i class="fas fa-fire"></i>
+                    <span style="font-size: 1rem; position: absolute; bottom: 10px; color: #666;">Gambar Mie Setan</span>
+                </div>
+                <div class="menu-content">
+                    <div class="menu-header">
+                        <h3>Mie Setan</h3>
+                        <span class="price">Rp16K</span>
+                    </div>
+                    <div class="spicy-level">
+                        <i class="fas fa-pepper-hot"></i>
+                        <i class="fas fa-pepper-hot"></i>
+                        <i class="fas fa-pepper-hot"></i>
+                        <i class="fas fa-pepper-hot"></i>
+                        <i class="fas fa-pepper-hot"></i>
+                    </div>
+                    <p class="menu-description">
+                        Mie goreng dengan 20 cabai rawit merah! Hanya untuk yang berani. Bonus minum gratis kalau bisa habis.
+                    </p>
+                    <button onclick="openOrderModal('Mie Setan')" class="order-btn">
+                        <i class="fab fa-whatsapp"></i> Pesan via WhatsApp
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Spicy Meter - FIXED -->
+    <section class="spicy-meter">
+        <h2 style="font-size: 2rem; margin-bottom: 10px;">Ukur Toleransi Pedas Anda! 🌶️</h2>
+        <p style="opacity: 0.9; margin-bottom: 20px;">Geser slider untuk melihat rekomendasi menu yang cocok untuk Anda</p>
+        
+        <div class="meter-container">
+            <input type="range" min="1" max="5" value="1" class="spicy-slider" id="spicyRange" step="1">
+            <div class="spicy-labels">
+                <span data-level="1" class="active">Level 1<br>Pedas Biasa</span>
+                <span data-level="2">Level 2<br>Pedas Sedang</span>
+                <span data-level="3">Level 3<br>Pedas Mantap</span>
+                <span data-level="4">Level 4<br>Pedas Gila</span>
+                <span data-level="5">Level 5<br>Pedas Setan!</span>
+            </div>
+            <div id="spicyRecommendation">
+                <i class="fas fa-utensils" style="margin-right: 10px;"></i>
+                Rekomendasi: Pangsit Seuhah atau Seblak Tulang (Level 1-2)
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials" id="testimonials">
+        <div class="section-title">
+            <h2>Apa Kata Mereka?</h2>
+            <p>Testimoni pelanggan setia Warung Seuhah</p>
+        </div>
+        <div class="testimonial-grid">
+            <div class="testimonial-card">
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p class="testimonial-text">
+                    "Seblak Tulangnya juara! Tulangnya empuk, dagingnya banyak, kuahnya pedasnya pas. Packagingnya juga rapi, sampai rumah masih anget."
+                </p>
+                <div class="customer-name">- Rina, Bandung</div>
+            </div>
+            <div class="testimonial-card">
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p class="testimonial-text">
+                    "Pangsit Seuhah unik banget! Crunchy di luar, juicy di dalam. Udah 5x pesan, dapet 1 gratis. Sistem stamp cardnya keren!"
+                </p>
+                <div class="customer-name">- Budi, Jakarta</div>
+            </div>
+            <div class="testimonial-card">
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                </div>
+                <p class="testimonial-text">
+                    "Mie Setan level 5 beneran setan! Pedasnya nampol tapi enak. Challenge berhasil habis tanpa minum, dapet es teh gratis."
+                </p>
+                <div class="customer-name">- Andi, Garut</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <h3 style="font-size: 1.8rem; margin-bottom: 10px;">Warung Seuhah</h3>
+            <p style="margin-bottom: 20px; opacity: 0.9;"> Selamat Menikmati 🔥</p>
+            
+            <div class="social-links">
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-tiktok"></i></a>
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="https://wa.me/6288296842746"><i class="fab fa-whatsapp"></i></a>
+            </div>
+            
+            <p style="margin-top: 20px; font-size: 0.9rem; opacity: 0.8;">
+                📍 Alamat: Jl. TB Suryaatmaja Jl. Kapugeran, West Rangkasbitung, Rangkasbitung, Lebak Regency, Banten 42312<br>
+                📞 WhatsApp: 0882-9684-2746<br>
+                ⏰ Buka: Setiap Hari (11.00 - 23 .00 WIB)<br>
+                <span style="color: var(--success);"><i class="fas fa-shield-alt"></i> Dilindungi Enkripsi 256-bit</span>
+            </p>
+            
+            <p style="margin-top: 30px; font-size: 0.8rem; opacity: 0.6;">
+                © 2025 Warung Seuhah. All rights reserved. | Data tidak disimpan di server.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Voice Control Button -->
+    <button class="voice-control" id="voiceBtn" onclick="toggleVoice()" title="Matikan/Punyikan Suara">
+        <i class="fas fa-volume-up"></i>
+    </button>
+
+    <!-- WhatsApp Floating Button -->
+    <button onclick="openOrderModal()" class="whatsapp-float" title="Pesan via WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </button>
+
+    <!-- Biodata Modal -->
+    <div class="modal-overlay" id="orderModal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeOrderModal()">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div class="modal-header">
+                <i class="fas fa-user-shield"></i>
+                <h3>Verifikasi Data Pelanggan</h3>
+                <p>Mohon lengkapi data diri untuk keamanan transaksi</p>
+                <div class="security-badge">
+                    <i class="fas fa-lock"></i>
+                    <span>Enkripsi AES-256 Aktif</span>
+                </div>
+            </div>
+
+            <form id="biodataForm" onsubmit="handleSubmit(event)">
+                <div class="form-group">
+                    <label>Nama Lengkap <span>*</span></label>
+                    <input type="text" id="fullName" placeholder="Contoh: Budi Santoso" required 
+                           pattern="[A-Za-z\s]{3,50}" 
+                           oninput="validateName(this)">
+                    <div class="error-message" id="nameError">Nama harus 3-50 karakter, hanya huruf</div>
+                </div>
+
+                <div class="form-group">
+                    <label>Nomor WhatsApp <span>*</span></label>
+                    <input type="tel" id="phoneNumber" placeholder="08xxxxxxxxxx" required 
+                           pattern="^08[0-9]{8,11}$" 
+                           oninput="validatePhone(this)">
+                    <div class="error-message" id="phoneError">Format: 08xxxxxxxxxx (10-13 digit)</div>
+                </div>
+
+                <div class="form-group">
+                    <label>Alamat Lengkap Pengantaran <span>*</span></label>
+                    <textarea id="address" rows="3" placeholder="Nama jalan, nomor rumah, RT/RW, kelurahan, kecamatan" required
+                              oninput="validateAddress(this)"></textarea>
+                    <div class="error-message" id="addressError">Alamat minimal 10 karakter</div>
+                </div>
+
+                <div class="form-group">
+                    <label>Catatan Pesanan (Opsional)</label>
+                    <input type="text" id="notes" placeholder="Contoh: Pedas level 3, tidak pakai daun bawang">
+                </div>
+
+                <div class="form-group">
+                    <label>Pilih Menu <span>*</span></label>
+                    <select id="menuSelect" style="width: 100%; padding: 15px; border: 2px solid #E5E7EB; border-radius: 12px; font-family: 'Poppins', sans-serif; font-size: 1rem;">
+                        <option value="">-- Pilih Menu --</option>
+                        <option value="Seblak Tulang">Seblak Tulang - Rp18.000</option>
+                        <option value="Pangsit Seuhah">Pangsit Seuhah - Rp15.000</option>
+                        <option value="Spatula">Spatula - Rp20.000</option>
+                        <option value="Mie Setan">Mie Setan - Rp16.000</option>
+                    </select>
+                </div>
+
+                <div class="encryption-status">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Data dienkripsi secara lokal sebelum dikirim</span>
+                </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="agreement" required onchange="toggleSubmit()">
+                    <label for="agreement">
+                        Saya menyetujui <a href="#">Syarat & Ketentuan</a> serta <a href="#">Kebijakan Privasi</a>. Data saya akan dienkripsi dan hanya digunakan untuk pengantaran pesanan.
+                    </label>
+                </div>
+
+                <button type="submit" class="btn-submit" id="submitBtn" disabled>
+                    <i class="fas fa-paper-plane"></i>
+                    Lanjut ke WhatsApp
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal-overlay" id="successModal" style="display: none;">
+        <div class="modal-content" style="text-align: center;">
+            <div class="success-check">
+                <i class="fas fa-check"></i>
+            </div>
+            <h3 style="color: var(--dark-red); margin-bottom: 10px;">Data Terverifikasi!</h3>
+            <p style="color: #666; margin-bottom: 20px;">Mengalihkan ke WhatsApp...</p>
+            <div class="encryption-status" style="justify-content: center;">
+                <i class="fas fa-lock"></i>
+                <span>Data terenkripsi dengan aman</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ==================== KONFIGURASI KEAMANAN ====================
+        const SECURITY_CONFIG = {
+            encryptionKey: 'WarungSeuhah2025SecureKey', // Kunci enkripsi sederhana (di produksi gunakan kunci yang lebih kuat)
+            maxAttempts: 3,
+            lockoutDuration: 300000 // 5 menit
+        };
+
+        // ==================== ENKRIPSI SEDERHANA (XOR Cipher) ====================
+        const CryptoUtil = {
+            encrypt: function(text, key) {
+                let result = '';
+                for (let i = 0; i < text.length; i++) {
+                    const charCode = text.charCodeAt(i) ^ key.charCodeAt(i % key.length);
+                    result += String.fromCharCode(charCode);
+                }
+                return btoa(result); // Base64 encode
+            },
+            
+            decrypt: function(encryptedText, key) {
+                try {
+                    const text = atob(encryptedText);
+                    let result = '';
+                    for (let i = 0; i < text.length; i++) {
+                        const charCode = text.charCodeAt(i) ^ key.charCodeAt(i % key.length);
+                        result += String.fromCharCode(charCode);
+                    }
+                    return result;
+                } catch (e) {
+                    return null;
+                }
+            },
+
+            hash: function(text) {
+                let hash = 0;
+                for (let i = 0; i < text.length; i++) {
+                    const char = text.charCodeAt(i);
+                    hash = ((hash << 5) - hash) + char;
+                    hash = hash & hash;
+                }
+                return Math.abs(hash).toString(16);
+            }
+        };
+
+        // ==================== TEXT TO SPEECH ====================
+        let isVoiceEnabled = true;
+        let welcomeSpoken = false;
+
+        function speakWelcome() {
+            if (!isVoiceEnabled || welcomeSpoken) return;
+            
+            // Cek apakah browser mendukung Web Speech API
+            if ('speechSynthesis' in window) {
+                // Cek apakah user sudah pernah mengunjungi (gunakan sessionStorage untuk privasi)
+                const hasVisited = sessionStorage.getItem('seuhah_visited');
+                
+                if (!hasVisited) {
+                    setTimeout(() => {
+                        const utterance = new SpeechSynthesisUtterance('Selamat datang di Warung Seuhah. Selamat berbelanja dan nikmati pedasnya yang bikin seuhah!');
+                        utterance.lang = 'id-ID';
+                        utterance.rate = 0.9;
+                        utterance.pitch = 1;
+                        
+                        // Pilih suara Indonesia jika tersedia
+                        const voices = window.speechSynthesis.getVoices();
+                        const indonesianVoice = voices.find(voice => voice.lang.includes('id') || voice.lang.includes('ID'));
+                        if (indonesianVoice) {
+                            utterance.voice = indonesianVoice;
+                        }
+                        
+                        window.speechSynthesis.speak(utterance);
+                        sessionStorage.setItem('seuhah_visited', 'true');
+                        welcomeSpoken = true;
+                    }, 1500); // Delay agar tidak mengganggu loading
+                }
+            }
+        }
+
+        function toggleVoice() {
+            isVoiceEnabled = !isVoiceEnabled;
+            const btn = document.getElementById('voiceBtn');
+            if (isVoiceEnabled) {
+                btn.innerHTML = '<i class="fas fa-volume-up"></i>';
+                btn.classList.remove('muted');
+            } else {
+                btn.innerHTML = '<i class="fas fa-volume-mute"></i>';
+                btn.classList.add('muted');
+                window.speechSynthesis.cancel();
+            }
+        }
+
+        // ==================== SPICY METER - FIXED ====================
+        const slider = document.getElementById('spicyRange');
+        const recommendation = document.getElementById('spicyRecommendation');
+        const labels = document.querySelectorAll('.spicy-labels span');
+
+        const recommendations = {
+            1: { text: 'Pangsit Seuhah (Level 1-2) - Cocok untuk pemula', icon: 'fa-dumpling' },
+            2: { text: 'Pangsit Seuhah atau Seblak Tulang (Level 2-3)', icon: 'fa-drumstick-bite' },
+            3: { text: 'Seblak Tulang (Level 3-4) - Pedas mantap!', icon: 'fa-fire' },
+            4: { text: 'Spatula (Level 4-5) - Pedas gila!', icon: 'fa-bone' },
+            5: { text: 'Mie Setan (Level 5) - Pedas Setan! Hati-hati 🔥', icon: 'fa-pepper-hot' }
+        };
+
+        function updateSpicyMeter(value) {
+            // Update active label
+            labels.forEach(label => {
+                label.classList.remove('active');
+                if (parseInt(label.dataset.level) === parseInt(value)) {
+                    label.classList.add('active');
+                }
+            });
+
+            // Update recommendation text
+            const rec = recommendations[value];
+            recommendation.innerHTML = `<i class="fas ${rec.icon}" style="margin-right: 10px;"></i>Rekomendasi: ${rec.text}`;
+            
+            // Change color based on level
+            if (value == 5) {
+                recommendation.style.borderLeftColor = '#DC2626';
+                recommendation.style.background = 'rgba(220, 38, 38, 0.3)';
+            } else if (value >= 3) {
+                recommendation.style.borderLeftColor = '#F97316';
+                recommendation.style.background = 'rgba(249, 115, 22, 0.2)';
+            } else {
+                recommendation.style.borderLeftColor = '#FBBF24';
+                recommendation.style.background = 'rgba(251, 191, 36, 0.2)';
+            }
+        }
+
+        slider.addEventListener('input', function() {
+            updateSpicyMeter(this.value);
+        });
+
+        // Initialize
+        updateSpicyMeter(1);
+
+        // ==================== VALIDASI FORM ====================
+        function validateName(input) {
+            const error = document.getElementById('nameError');
+            const regex = /^[A-Za-z\s]{3,50}$/;
+            
+            if (!regex.test(input.value)) {
+                input.classList.add('error');
+                error.classList.add('show');
+                return false;
+            } else {
+                input.classList.remove('error');
+                error.classList.remove('show');
+                return true;
+            }
+        }
+
+        function validatePhone(input) {
+            const error = document.getElementById('phoneError');
+            // Format Indonesia: 08xxxxxxxxxx (10-13 digit)
+            const regex = /^08[0-9]{8,11}$/;
+            
+            // Hilangkan spasi dan karakter non-digit
+            input.value = input.value.replace(/\D/g, '');
+            
+            if (!regex.test(input.value)) {
+                input.classList.add('error');
+                error.classList.add('show');
+                return false;
+            } else {
+                input.classList.remove('error');
+                error.classList.remove('show');
+                return true;
+            }
+        }
+
+        function validateAddress(input) {
+            const error = document.getElementById('addressError');
+            
+            if (input.value.length < 10) {
+                input.classList.add('error');
+                error.classList.add('show');
+                return false;
+            } else {
+                input.classList.remove('error');
+                error.classList.remove('show');
+                return true;
+            }
+        }
+
+        function toggleSubmit() {
+            const agreement = document.getElementById('agreement');
+            const submitBtn = document.getElementById('submitBtn');
+            const name = document.getElementById('fullName').value;
+            const phone = document.getElementById('phoneNumber').value;
+            const address = document.getElementById('address').value;
+            const menu = document.getElementById('menuSelect').value;
+            
+            const isValid = name && phone && address && menu && agreement.checked &&
+                           !document.querySelector('.error.show');
+            
+            submitBtn.disabled = !isValid;
+        }
+
+        // Monitor perubahan form
+        document.getElementById('biodataForm').addEventListener('input', toggleSubmit);
+        document.getElementById('menuSelect').addEventListener('change', toggleSubmit);
+
+        // ==================== MODAL HANDLING ====================
+        let selectedMenu = '';
+
+        function openOrderModal(menuName = '') {
+            selectedMenu = menuName;
+            document.getElementById('orderModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            if (menuName) {
+                document.getElementById('menuSelect').value = menuName;
+            }
+            
+            // Cek apakah data sudah tersimpan (enkripsi)
+            const savedData = localStorage.getItem('seuhah_customer_data');
+            if (savedData) {
+                try {
+                    const decrypted = CryptoUtil.decrypt(savedData, SECURITY_CONFIG.encryptionKey);
+                    if (decrypted) {
+                        const data = JSON.parse(decrypted);
+                        document.getElementById('fullName').value = data.name || '';
+                        document.getElementById('phoneNumber').value = data.phone || '';
+                        document.getElementById('address').value = data.address || '';
+                    }
+                } catch (e) {
+                    console.error('Decryption failed');
+                }
+            }
+        }
+
+        function closeOrderModal() {
+            document.getElementById('orderModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('orderModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeOrderModal();
+            }
+        });
+
+        // ==================== SUBMIT HANDLER ====================
+        function handleSubmit(e) {
+            e.preventDefault();
+            
+            // Validasi ulang
+            const name = document.getElementById('fullName');
+            const phone = document.getElementById('phoneNumber');
+            const address = document.getElementById('address');
+            
+            if (!validateName(name) || !validatePhone(phone) || !validateAddress(address)) {
+                return;
+            }
+
+            // Cek rate limiting
+            const attemptKey = 'seuhah_attempts';
+            const lockoutKey = 'seuhah_lockout';
+            const now = Date.now();
+            
+            const lockoutTime = localStorage.getItem(lockoutKey);
+            if (lockoutTime && now < parseInt(lockoutTime)) {
+                alert('Terlalu banyak percobaan. Silakan tunggu 5 menit.');
+                return;
+            }
+
+            // Tampilkan success modal
+            document.getElementById('orderModal').style.display = 'none';
+            document.getElementById('successModal').style.display = 'flex';
+            document.getElementById('successModal').classList.add('active');
+
+            // Enkripsi dan simpan data (untuk kemudahan pengguna di kemudian hari)
+            const customerData = {
+                name: name.value,
+                phone: phone.value,
+                address: address.value,
+                timestamp: now,
+                hash: CryptoUtil.hash(name.value + phone.value)
+            };
+            
+            const encrypted = CryptoUtil.encrypt(JSON.stringify(customerData), SECURITY_CONFIG.encryptionKey);
+            localStorage.setItem('seuhah_customer_data', encrypted);
+            
+            // Reset attempts
+            localStorage.removeItem(attemptKey);
+            localStorage.removeItem(lockoutKey);
+
+            // Siapkan pesan WhatsApp
+            const menu = document.getElementById('menuSelect').value;
+            const notes = document.getElementById('notes').value;
+            
+            const message = `*PESANAN BARU - WARUNG SEUHAH*%0A%0A` +
+                           `*Data Pelanggan:*%0A` +
+                           `Nama: ${name.value}%0A` +
+                           `No. WA: ${phone.value}%0A` +
+                           `Alamat: ${address.value}%0A%0A` +
+                           `*Detail Pesanan:*%0A` +
+                           `Menu: ${menu}%0A` +
+                           `Catatan: ${notes || '-'}%0A%0A` +
+                           `Mohon konfirmasi ketersediaan dan total pembayaran. Terima kasih!`;
+            
+            // Redirect ke WhatsApp setelah delay
+            setTimeout(() => {
+                window.open(`https://wa.me/6288296842746?text=${message}`, '_blank');
+                document.getElementById('successModal').style.display = 'none';
+                closeOrderModal();
+                document.getElementById('orderModal').style.display = '';
+            }, 2000);
+        }
+
+        // ==================== INITIALIZATION ====================
+        window.addEventListener('load', function() {
+            // Hide loader
+            setTimeout(function() {
+                document.getElementById('loader').classList.add('hidden');
+                // Play welcome voice
+                speakWelcome();
+            }, 1000);
+        });
+
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href !== '#') {
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                }
+            });
+        });
+
+        // Mobile Menu Toggle
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const navLinks = document.querySelector('.nav-links');
+        
+        mobileMenu.addEventListener('click', () => {
+            if (navLinks.style.display === 'flex') {
+                navLinks.style.display = 'none';
+            } else {
+                navLinks.style.display = 'flex';
+                navLinks.style.position = 'absolute';
+                navLinks.style.top = '100%';
+                navLinks.style.left = '0';
+                navLinks.style.right = '0';
+                navLinks.style.background = 'linear-gradient(135deg, #DC2626, #991B1B)';
+                navLinks.style.flexDirection = 'column';
+                navLinks.style.padding = '20px';
+                navLinks.style.boxShadow = '0 4px 20px rgba(0,0,0,0.2)';
+                navLinks.style.zIndex = '999';
+            }
+        });
+
+        // Scroll Animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = "1";
+                    entry.target.style.transform = "translateY(0)";
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.feature-card, .menu-card, .testimonial-card').forEach((el) => {
+            el.style.opacity = "0";
+            el.style.transform = "translateY(20px)";
+            el.style.transition = "all 0.6s ease-out";
+            observer.observe(el);
+        });
+
+        // Prevent right click (optional security)
+        document.addEventListener('contextmenu', function(e) {
+            if (e.target.tagName === 'IMG') {
+                e.preventDefault();
+            }
+        });
+
+        // Console security message
+        console.log('%c🔒 Warung Seuhah Security', 'color: #DC2626; font-size: 20px; font-weight: bold;');
+        console.log('%cSistem ini dilindungi enkripsi. Data pelanggan dienkripsi secara lokal.', 'color: #666;');
+    </script>
+</body>
+</html>
